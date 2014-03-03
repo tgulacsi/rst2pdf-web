@@ -1,0 +1,25 @@
+#!/bin/sh
+echo "Usage: $0 <url> [rst2pdf options] -- <files to upload>"
+url="$1"
+shift
+args=
+files=
+i=0
+mode=0
+for opt in "$@"; do
+    if [ "$mode" -eq 0 ]; then
+        if [ "x$opt" = 'x--' ]; then
+            mode=1
+            i=0
+            continue
+        fi
+        args="$args -F arg=$opt"
+    else
+        files="$files -F upfile$i=@$opt"
+    fi
+    i=$(( $i + 1 ))
+done
+
+CMD="curl -v $args $files $url"
+echo "$CMD"
+$CMD
