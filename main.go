@@ -76,7 +76,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var errBuf bytes.Buffer
 	c.Stderr = &errBuf
 
+	log.Printf("calling rst2pdf in %s with args: %s", c.Dir, args)
 	if err = c.Run(); err != nil {
+		log.Printf("ERROR: %s\n%s", err, errBuf.String())
 		http.Error(w, fmt.Sprintf("running %s: %v\n%s", c, err, errBuf.String()),
 			http.StatusInternalServerError)
 		return

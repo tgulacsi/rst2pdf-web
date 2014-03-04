@@ -16,13 +16,13 @@ RUN LD=/var/log/rst2pdf-web; SD=/etc/service/rst2pdf-web/log; mkdir -p $LD $SD &
 
 RUN useradd pdf
 ENV HOME /home/pdf
-
 RUN mkdir -p $HOME/bin 
-ADD rst2pdf-web $HOME/bin/rst2pdf-web
 RUN chown pdf: $HOME
 
 ## LOCAL
 EXPOSE 22221:22221
 CMD ["/sbin/my_init"]
+
+ADD rst2pdf-web $HOME/bin/rst2pdf-web
 
 # should run with -p 22221:22221
